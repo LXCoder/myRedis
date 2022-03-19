@@ -222,22 +222,11 @@ void MyRedisDb::signalHandler(int signo)
 				ofs.close();//关闭文件
 			}
 
-			// 创建子进程改名
-			pid_t pid = fork();
-			if (pid < 0) //fork失败的情况
+			// 替换原AOF文件
+			int ret = rename(AOF_REWRITE_FILE, AOF_FILE);
+			if (ret < 0)
 			{
-				perror("fork error");
-				return;
-			}
-			else if (pid > 0)//父进程
-			{
-				m_aof_state = -1;
-				cout << "bgrewrite AOF succeed." << endl;
-			}
-			else if (pid == 0) //子进程
-			{
-				execlp("mv", "mv", AOF_REWRITE_FILE, AOF_FILE, NULL);
-				perror("execl error");
+				perror("rename error");
 			}
 		}
 	}
