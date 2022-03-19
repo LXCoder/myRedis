@@ -13,7 +13,7 @@ make myRedis-cli
 #### 启动客户端
 ./myRedis-cli 127.0.0.1 8888
 
-#### 压力测试结果
+#### 跳表测试结果
 ##### 插入
 | insert element num (w) | timecost (s) |
 | ---------------------- | ------------ |
